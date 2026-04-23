@@ -9,7 +9,7 @@ RUN apt-get update && apt-get install -y \
 RUN python -m venv /venv
 ENV PATH="/venv/bin:$PATH"
 
-RUN pip install --no-cache-dir qdrant-loader
+RUN pip install --no-cache-dir qdrant-loader qdrant-loader-mcp-server
 
 
 # ---- Runtime ----
@@ -20,4 +20,10 @@ ENV PATH="/venv/bin:$PATH"
 
 WORKDIR /app
 
-CMD ["qdrant-loader", "--config", "/app/config.yaml", "ingest"]
+EXPOSE 8080
+
+# Default: MCP server. Override at runtime for ingestion.
+CMD ["mcp-qdrant-loader", \
+     "--transport", "http", \
+     "--host", "0.0.0.0", \
+     "--port", "8080"]
