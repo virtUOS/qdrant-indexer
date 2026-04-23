@@ -13,9 +13,21 @@ updates:
       - dependencies
       - github-actions
 
-  # Keep the base image in the Dockerfile up to date
+  # qdrant-loader image
   - package-ecosystem: docker
-    directory: /
+    directory: /qdrant-loader
+    schedule:
+      interval: weekly
+      day: monday
+      time: '06:00'
+      timezone: UTC
+    labels:
+      - dependencies
+      - docker
+
+  # qdrant-mcp image
+  - package-ecosystem: docker
+    directory: /qdrant-mcp
     schedule:
       interval: weekly
       day: monday
