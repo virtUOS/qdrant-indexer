@@ -15,6 +15,10 @@ RUN pip install --no-cache-dir qdrant-loader qdrant-loader-mcp-server
 # ---- Runtime ----
 FROM python:3.12-slim AS runtime
 
+RUN apt-get update && apt-get install -y \
+    git \
+    && rm -rf /var/lib/apt/lists/*
+
 COPY --from=builder /venv /venv
 ENV PATH="/venv/bin:$PATH"
 
